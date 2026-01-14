@@ -429,15 +429,6 @@ int stepsToPotValue(long stepPosition, int potMin, int potMax, long stepMin, lon
 
 
 
-
-
-
-
-
-
-
-
-
 void moveToPosition(long targetPositionInput) {
   long stepsToMove = targetPositionInput - currentPosition;
   digitalWrite(dirPin, (stepsToMove > 0) ? LOW : HIGH);  // Set direction based on target position
@@ -505,21 +496,3 @@ void simplePotCalibration() {
 
 
 
-void moveToPositionBACKUP(long targetPositionSteps) {
-  long stepsToMove = targetPositionSteps - calibratedPosition2;
-  digitalWrite(dirPin, (stepsToMove > 0) ? LOW : HIGH);     //LOW DIR Pin means Steps to Move + is positive meaning we are incrementing going towards Limit Switch 2
-							    //Steps to move - negative means HIGH DIR pin decrementing towards limit switch 1
-
-  unsigned long previousMicros = micros();
-
-  for (long i = 0; i < abs(stepsToMove); i++) {
-    // Perform one step
-    digitalWrite(stepPin, HIGH);
-    digitalWrite(stepPin, LOW);
-    currentPosition += (stepsToMove > 0) ? 1 : -1;
-
-    previousMicros = micros(); // Reset here for accurate timing
-    while ((micros() - previousMicros) < stepDelay);
-    
-    }	
-}
